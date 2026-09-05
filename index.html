@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Not All Tokens Are Equal: Uncertainty-Aware Consistency Distillation for Few-Step Video Generation
+    </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0 auto;
+            max-width: 900px;
+            padding: 10px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #333;
+        }
+
+        .author {
+            font-size: 16pt;
+            text-align: center;
+            margin: 20pt 15pt;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-family: 'Google Sans', sans-serif;
+        }
+
+
+        figure {
+            width: 100%;
+            margin: 40px 0;
+            text-align: left;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0px 0;
+        }
+
+        table th,
+        table td {
+            width: 20%;
+            border: 1px solid #ccc;
+            padding: 0px;
+            text-align: center;
+            border: none;
+        }
+
+        figcaption {
+            margin: -15px 0;
+            font-style: italic;
+            color: #666;
+        }
+
+        .animation {
+            width: 100%;
+            max-width: 900px;
+            display: block;
+        }
+
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 1;
+        }
+
+        .page.active {
+            visibility: visible;
+            opacity: 1;
+            z-index: 10;
+        }
+
+        .text-block {
+            width: 70%;
+            max-width: 900px;
+            margin: 2rem auto;
+            text-align: justify;
+            font-family: sans-serif;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 style="margin: 10px 0; text-align: center;">
+        Not All Tokens Are Equal: Uncertainty-Aware Consistency Distillation for Few-Step Video Generation
+    </h1>
+
+
+    <h2 style="margin-top: 50px; margin-bottom: 0px;">🎬 Videos in Main Paper</h2>
+    <h3 style="margin-top: 0px; margin-bottom: 0px;">Figure 3 Qualitative Comparisons with Baselines.</h3>
+
+
+    <div style="text-align: center; margin: 0px 0;">
+        <video width="100%" max-width="800px" controls autoplay loop muted playsinline>
+            <source src="./videos/horse.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <p style="text-align: center; margin-top: 0px; line-height: 1.6; color: #333;">
+            A horse is grazing in the field, then it suddenly starts running across the meadow.
+        </p>
+    </div>
+
+    <div style="text-align: center; margin: 0px 0;">
+        <video width="100%" max-width="800px" controls autoplay loop muted playsinline>
+            <source src="./videos/person.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <p style="text-align: center; margin-top: 0px; line-height: 1.6; color: #333;">
+            A person is drinking water, then they suddenly start organizing their desk.
+        </p>
+    </div>
+
+
+    <h3 style="margin-top: 50px;"> Figure 6 Qualitative comparison of ablation variants..</h3>
+    <div style="text-align: center; margin: 0px 0;">
+        <video width="100%" max-width="800px" controls autoplay loop muted playsinline>
+            <source src="./videos/balloons.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <p style="text-align: center; margin-top: 0px; line-height: 1.6; color: #333;">
+            Two red balloons are floating in the air.
+        </p>
+    </div>
+
+
+    <h2 style="margin-top: 50px;">🎬 Additional Zero-Shot Results on Unseen Dataset</h2>
+
+    
+
+    <script>
+        // Function to synchronize videos within a figure
+        function syncFigureVideos(figureId) {
+            const figure = document.getElementById(figureId); // Get the figure by ID
+            const videos = figure.querySelectorAll('video'); // Select all videos in the figure
+
+            // Reset and play all videos in the figure
+            videos.forEach(video => {
+                video.currentTime = 0;
+                video.play();
+            });
+
+            // Ensure videos stay in sync during playback
+            videos.forEach(video => {
+                video.addEventListener('timeupdate', () => {
+                    videos.forEach(v => {
+                        if (Math.abs(video.currentTime - v.currentTime) > 0.1) {
+                            v.currentTime = video.currentTime; // Sync all to the current video
+                        }
+                    });
+                });
+            });
+        }
+
+        // Synchronize all figures with the same structure
+        function syncAllFigures() {
+            const allFigures = document.querySelectorAll('figure'); // Select all figures
+            allFigures.forEach((figure, index) => {
+                const figureId = `figure-${index + 1}`; // Assign unique IDs dynamically
+                figure.id = figureId; // Set the ID on the figure
+                syncFigureVideos(figureId); // Synchronize videos within the figure
+            });
+        }
+
+        // Synchronize when the page loads
+        window.addEventListener('load', syncAllFigures);
+    </script>
+</body>
+
+</html>
